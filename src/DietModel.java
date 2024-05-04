@@ -49,22 +49,25 @@ public class DietModel {
         }
     }
 
-    // Add a method to calculate the TDEE
+    // Method to calculate TDEE
     private double calculateTDEE() {
         return calculateBMR() * activityLevel ;
     }
 
+    //Method to calculate Calories per day
     private double calculateCaloriesPerDay() {
         
-    	double A = calculateTDEE() - 500;  
-    	System.out.println(A+" Calories perDay to deficit");
-    	return A;
+    	double caloriesPerDay = calculateTDEE() - 500;  
+    	System.out.println(caloriesPerDay+"Daily calories to deficit");
+    	return caloriesPerDay;
     }
 
+    // Method to set the calories per day
     public void setCaloriesPerDay() {
         caloriesPerDay = calculateCaloriesPerDay();
     }
 
+    // Setters for the user's information
     public boolean setAge(int age) {
         if (age <= 0) {
             return false;
@@ -124,6 +127,7 @@ public class DietModel {
         }
     }
 
+    // Method to check if the food choices are valid
     public boolean checkFoodChoices(int protein, int fat, int carbs) {
         if (protein < 1 || protein > 4 || fat < 1 || fat > 4 || carbs < 1 || carbs > 4) {
             return false;
@@ -132,12 +136,12 @@ public class DietModel {
     }
 
     public void setupDiet(int protein, int fat, int carbs) {
-        // Assuming you've selected your foods: selectedProtein, selectedFat,
-        // selectedCarb
+        // Calculate the calories per meal
         double caloriesPerMeal = caloriesPerDay / 3; // 3 meals per day
-        Foods selectedProtein = proteinFoods.get(protein - 1); // Example selection, you would get this from user input
-        Foods selectedFat = fatFoods.get(fat - 1); // Example selection
-        Foods selectedCarb = carbFoods.get(carbs - 1); // Example selection
+        // Get the selected food from each list
+        Foods selectedProtein = proteinFoods.get(protein - 1); 
+        Foods selectedFat = fatFoods.get(fat - 1); 
+        Foods selectedCarb = carbFoods.get(carbs - 1); 
 
         // Calculate calories assigned to each macronutrient group based on the target
         double proteinCalories = caloriesPerMeal * 0.35; // 35% of calories from protein
@@ -152,7 +156,7 @@ public class DietModel {
         double carbAmount = (carbCalories / selectedCarb.caloriesPerKg) * 1000; // Convert to grams
 
         // Output the recommended quantities
-        System.out.println("To meet your daily caloric goal with a calorie deficit, you should eat per meal:"); //1 meal
+        System.out.println("Recommended quantites to reach a calorie deficit: "); //1 meal
         System.out.println(String.format("%.2f grams of %s", proteinAmount, selectedProtein.name));
         System.out.println(String.format("%.2f grams of %s", fatAmount, selectedFat.name));
         System.out.println(String.format("%.2f grams of %s", carbAmount, selectedCarb.name));
@@ -187,10 +191,10 @@ public class DietModel {
             }
             System.out.println("Enter your activity level: ");
             System.out.println("1. No activities ");
-            System.out.println("2. 1 to 3 Training days per weak ");
-            System.out.println("3. 3 to 5 Training days per weak ");
-            System.out.println("4. 6 to 7 Training days per weak ");
-            System.out.println("5. too much Training every day per weak ");
+            System.out.println("2. 1 to 3 Training days per week ");
+            System.out.println("3. 3 to 5 Training days per week ");
+            System.out.println("4. 6 to 7 Training days per week ");
+            System.out.println("5. Hard training every day of the week ");
             int actLevel = scanner.nextInt();
             if (!diet.setActivityLevel(actLevel)) {
                 System.out.println("Invalid activity level");
@@ -198,13 +202,13 @@ public class DietModel {
             }
             diet.setCaloriesPerDay();
             System.out.println(
-                    "Enter type of protein food you want to eat (1 for Chicken, 2 for Beef, 3 for Fish, 4 for Eggs): ");
+                    "Enter the type of protein food you want to eat (1 for Chicken, 2 for Beef, 3 for Fish, 4 for Eggs): ");
             int proteinChoice = scanner.nextInt();
             System.out.println(
-                    "Enter type of fat food you want to eat (1 for Butter, 2 for Olive Oil, 3 for Avocado, 4 for Coconut Oil): ");
+                    "Enter the type of fat food you want to eat (1 for Butter, 2 for Olive Oil, 3 for Avocado, 4 for Coconut Oil): ");
             int fatChoice = scanner.nextInt();
             System.out.println(
-                    "Enter type of carb food you want to eat (1 for Rice, 2 for Pasta, 3 for Bread, 4 for Potatoes): ");
+                    "Enter the type of carb food you want to eat (1 for Rice, 2 for Pasta, 3 for Bread, 4 for Potatoes): ");
             int carbChoice = scanner.nextInt();
             if (!diet.checkFoodChoices(proteinChoice, fatChoice, carbChoice)) {
                 System.out.println("Invalid food choices");
