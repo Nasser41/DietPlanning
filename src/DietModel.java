@@ -58,7 +58,7 @@ public class DietModel {
     private double calculateCaloriesPerDay() {
         
     	double caloriesPerDay = calculateTDEE() - 500;  
-    	System.out.println(caloriesPerDay+"Daily calories to deficit");
+    	System.out.println(caloriesPerDay+" Daily calories to deficit");
     	return caloriesPerDay;
     }
 
